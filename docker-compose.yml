@@ -1,0 +1,29 @@
+services:
+  jdownloader2-selkies:
+    container_name: jdownloader2-selkies
+    environment:
+      - GROUP_ID=100
+      - TZ=Australia/Brisbane
+      - CLEAN_TMP_DIR=1
+      - LANG=en_AU.UTF-8
+      - KEEP_APP_RUNNING=1
+      - USER_ID=1000
+      - PUID=1000
+      - PGID=100
+      - MYJDOWNLOADER_EMAIL=
+      - MYJDOWNLOADER_PASSWORD=
+      - MYJDOWNLOADER_DEVICE_NAME=
+    hostname: jdownloader2-selkies
+    image: jdownloader2
+    ports:
+      - 3129:3129/tcp
+      - 3002:3001/tcp
+    restart: unless-stopped
+    volumes:
+      - /config/jdownloader2/config:/defaults/cfg:rw
+      - /etc/localtime:/etc/localtime:ro
+      - /downloads/jdownloader:/output:rw
+    working_dir: /tmp
+networks:
+  reverse_proxy:
+    external: true
